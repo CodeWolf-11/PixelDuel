@@ -1,8 +1,9 @@
 import React from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { registerActions } from "@/actions/auth.actions";
+import SubmitBtn from "@/components/common/SubmitBtn";
 
 const Login: React.FC = () => {
     return <div className="h-screen w-full flex justify-center items-center p-2">
@@ -11,7 +12,7 @@ const Login: React.FC = () => {
             <h1 className="text-3xl font-bold">Register</h1>
             <p>Welcome</p>
 
-            <form action="">
+            <form action={registerActions}>
                 <div className="mt-4">
                     <Label htmlFor="name">Name</Label>
                     <Input id="name" type="text" name="name" placeholder="john doe" />
@@ -27,13 +28,11 @@ const Login: React.FC = () => {
                 </div>
 
                 <div className="mt-4">
-                    <Label htmlFor="cpassword">Password</Label>
-                    <Input id="cpassword" type="password" name="cpassword" placeholder="Enter the password" />
+                    <Label htmlFor="confirm_password">Confirm Passsword</Label>
+                    <Input id="confirm_password" type="password" name="confirm_password" placeholder="Enter the password" />
                 </div>
 
-                <div className="mt-4 block ">
-                    <Button className="w-full ">Submit</Button>
-                </div>
+                <SubmitBtn />
             </form>
 
             <p className="text-center mt-2">
