@@ -3,11 +3,16 @@ import "dotenv/config";
 import path from "path";
 import { fileURLToPath } from "url";
 import ejs from "ejs";
+import router from "./routes/index.js";
+//Queue
+import "./jobs/index.js";
+import { emailQueue, emailQueueName } from "./jobs/EmailJob.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url)); //this will give the path of the current directory
 const app = express();
 const PORT = process.env.PORT || 8000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use('/api', router);
 // set up view engine
 app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "./views"));
@@ -22,7 +27,4 @@ app.get("/", async (req, res) => {
         "message": "email successfull"
     });
 });
-//Queue
-import "./jobs/index.js";
-import { emailQueue, emailQueueName } from "./jobs/EmailJob.js";
 app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));

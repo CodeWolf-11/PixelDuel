@@ -10,8 +10,8 @@ export const defaultQueueOptions = {
     },
     attempts: 3,
     backoff: {
-        type: "exponential",
-        delay: 1000,
+        type: "exponential", //it defines that the delay between the retires will increase exponentially
+        delay: 1000, //this is the initial delay
     },
     removeOnFail: false,
 };
