@@ -3,7 +3,6 @@ import "dotenv/config";
 import path from "path";
 import { fileURLToPath } from "url";
 import ejs from "ejs";
-import { send } from "./config/mail.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url)); //this will give the path of the current directory
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -13,10 +12,17 @@ app.use(express.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "./views"));
 app.get("/", async (req, res) => {
-    const html = await ejs.renderFile(__dirname + `/views/emails/welcome.ejs`, { name: "Testing" });
-    await send("yohalej367@obisims.com", "Welcome to PixelDuel", html);
+    const html = await ejs.renderFile(__dirname + `/views/emails/welcome.ejs`, { name: "Nishant Rai" });
+    await emailQueue.add(emailQueueName, {
+        to: "yohalej367@obisims.com",
+        subject: "Testing...",
+        body: html
+    });
     return res.json({
         "message": "email successfull"
     });
 });
+//Queue
+import "./jobs/index.js";
+import { emailQueue, emailQueueName } from "./jobs/EmailJob.js";
 app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
