@@ -3,6 +3,7 @@ import "dotenv/config";
 import path from "path";
 import { fileURLToPath } from "url";
 import ejs from "ejs";
+import router from "./routes/index.js";
 //Queue
 import "./jobs/index.js";
 import { emailQueue, emailQueueName } from "./jobs/EmailJob.js";
@@ -17,6 +18,7 @@ const PORT = process.env.PORT || 8000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use('/api', router);
 
 // set up view engine
 app.set("view engine", "ejs");
