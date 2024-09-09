@@ -3,7 +3,11 @@ import "dotenv/config";
 import path from "path";
 import { fileURLToPath } from "url";
 import ejs from "ejs";
-import { send } from "./config/mail.js";
+//Queue
+import "./jobs/index.js";
+import { emailQueue, emailQueueName } from "./jobs/EmailJob.js";
+
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url)); //this will give the path of the current directory
 
 
@@ -33,10 +37,7 @@ app.get("/", async (req: Request, res: Response) => {
     });
 });
 
-//Queue
 
-import "./jobs/index.js";
-import { emailQueue, emailQueueName } from "./jobs/EmailJob.js";
 
 
 app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
