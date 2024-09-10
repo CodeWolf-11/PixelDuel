@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner"
+import SessionWrapper from "@/components/auth/SessionWrapper";
 
 import "./globals.css";
 
@@ -35,15 +36,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          "min-h-screen bg-red-50 font-sans antialiased",
-          fontSans.variable
-        )}
-      >
-        {children}
-        <Toaster richColors position="top-center" />
-      </body>
+      <SessionWrapper>
+        <body
+          className={cn(
+            "min-h-screen bg-red-50 font-sans antialiased",
+            fontSans.variable
+          )}
+        >
+          {children}
+          <Toaster richColors position="top-center" />
+        </body>
+      </SessionWrapper>
     </html>
   );
 }

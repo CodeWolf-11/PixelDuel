@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "rootDirs": [
-      "src"
+      "src",
+      "src/custom-types.d.ts"
     ],
     "outDir": "dist",
     "lib": [

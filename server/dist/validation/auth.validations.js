@@ -6,3 +6,7 @@ export const registerSchema = z.object({
     confirm_password: z.string({ message: "password is required" }).min(6, { message: "password must be at least 6 characters long" }),
 })
     .refine((parameter) => parameter.password == parameter.confirm_password, { message: "Passwords not matched", path: ["confirm_password"] });
+export const loginSchema = z.object({
+    email: z.string({ message: "email is required" }).email({ "message": "email is invalid" }),
+    password: z.string({ message: "password is required" })
+});
