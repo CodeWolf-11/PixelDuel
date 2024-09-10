@@ -10,3 +10,13 @@ export const loginSchema = z.object({
     email: z.string({ message: "email is required" }).email({ "message": "email is invalid" }),
     password: z.string({ message: "password is required" })
 });
+export const forgetPasswordSchema = z.object({
+    email: z.string({ message: "email is required" }).email({ message: "email is invalid" })
+});
+export const resetPasswordSchema = z.object({
+    email: z.string({ message: "Email is required" }).email({ message: "email is invalid" }),
+    token: z.string(),
+    password: z.string({ message: "Password is required" }).min(6, { message: "The password must contain at least 6 characters" }),
+    confirm_password: z.string({ message: "confirm password is required" }).min(6, { message: "The password must contain at least 6 characters" })
+})
+    .refine((parameter) => parameter.password === parameter.confirm_password, { "message": "Passwords didn't match", "path": ["confirm_password"] });
