@@ -7,7 +7,7 @@ import { useFormStatus } from "react-dom";
 const SubmitBtn: React.FC = () => {
 
     const { pending } = useFormStatus();
-    return <Button className="w-full" disabled={pending}>
+    return <Button className="w-full mt-4" disabled={pending}>
         {pending ? "Processing..." : "Submit"}
     </Button>
 }
