@@ -1,6 +1,6 @@
 import { forgetPasswordSchema, resetPasswordSchema } from "../validation/auth.validations.js";
 import { ZodError } from "zod";
-import { formatError, renderEmailEjs } from "../helper.js";
+import { checkDateDiff, formatError, renderEmailEjs } from "../helper.js";
 import prisma from "../config/db.js";
 import bcrypt from "bcrypt";
 import { v4 as uuid4 } from "uuid";
@@ -32,10 +32,10 @@ export const forgetPasswordController = async (req, res) => {
             }
         });
         const url = `${process.env.CLIENT_APP_URL}/reset-password?email=${payload.email}&token=${token}`;
-        const html = renderEmailEjs("forget-password.ejs", { url: url });
+        const html = await renderEmailEjs("forget-password", { url: url });
         //add email to the queue
         await emailQueue.add(emailQueueName, {
-            to: payload.email,
+            to: user.email,
             subject: "Reset Password",
             body: html
         });
@@ -83,7 +83,30 @@ export const resetPasswordController = async (req, res) => {
                 }
             });
         }
-        //set a expiry for the token
+        // expiry for the token
+        const diff = checkDateDiff(user.token_send_at);
+        if (diff > 1) {
+            return res.status(422).json({
+                message: "Invalid Data",
+                errors: {
+                    email: "Token expired"
+                }
+            });
+        }
+        // Update password
+        payload.password = await bcrypt.hash(payload.password, 10);
+        await prisma.user.update({
+            where: {
+                email: payload.email
+            },
+            data: {
+                password: payload.password
+            }
+        });
+        return res.status(200).json({
+            "message": "Password updated successfully",
+            errors: {}
+        });
     }
     catch (error) {
         if (error instanceof ZodError) {

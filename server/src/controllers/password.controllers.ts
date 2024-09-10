@@ -43,11 +43,11 @@ export const forgetPasswordController = async (req: Request, res: Response) => {
 
         const url = `${process.env.CLIENT_APP_URL}/reset-password?email=${payload.email}&token=${token}`
 
-        const html = renderEmailEjs("forget-password.ejs", { url: url });
+        const html = await renderEmailEjs("forget-password", { url: url });
 
         //add email to the queue
         await emailQueue.add(emailQueueName, {
-            to: payload.email,
+            to: user.email,
             subject: "Reset Password",
             body: html
         });
@@ -108,7 +108,7 @@ export const resetPasswordController = async (req: Request, res: Response) => {
             });
         }
 
-        //set a expiry for the token
+        // expiry for the token
 
         const diff = checkDateDiff(user.token_send_at!);
 
