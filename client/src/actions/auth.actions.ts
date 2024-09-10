@@ -77,3 +77,30 @@ export const loginActions = async (prevState: any, formdata: FormData) => {
 
     }
 }
+
+export const forgetPassordAction = async (prevState: any, formdata: FormData) => {
+    try {
+
+    } catch (error) {
+
+        if (error instanceof AxiosError) {
+
+            if (error.response?.status == 422) {
+                return {
+                    status: 422,
+                    message: error.response?.data?.message,
+                    errors: error.response?.data?.errors,
+                    data: {}
+                }
+            }
+
+        }
+
+        return {
+            status: 500,
+            message: "Something went wrong",
+            errors: {},
+            data: {}
+        }
+    }
+}
