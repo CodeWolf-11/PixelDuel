@@ -7,11 +7,13 @@ import router from "./routes/index.js";
 //Queue
 import "./jobs/index.js";
 import { emailQueue, emailQueueName } from "./jobs/EmailJob.js";
+import { appLimiter } from "./config/rateLimit.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url)); //this will give the path of the current directory
 const app = express();
 const PORT = process.env.PORT || 8000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(appLimiter);
 app.use('/api', router);
 // set up view engine
 app.set("view engine", "ejs");
