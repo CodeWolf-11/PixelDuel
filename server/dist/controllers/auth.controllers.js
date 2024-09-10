@@ -51,7 +51,6 @@ export const registerController = async (req, res) => {
         });
     }
     catch (error) {
-        console.log(error);
         if (error instanceof ZodError) {
             const errors = formatError(error);
             return res.status(422).json({

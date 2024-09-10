@@ -45,7 +45,7 @@ export const registerController = async (req: Request, res: Response) => {
             to: payload.email,
             subject: "Email Verification",
             body: emailHtml
-        })
+        });
 
         //create an entry in db
         await prisma.user.create({
@@ -64,7 +64,6 @@ export const registerController = async (req: Request, res: Response) => {
 
     } catch (error) {
 
-        console.log(error);
         if (error instanceof ZodError) {
             const errors = formatError(error);
 
