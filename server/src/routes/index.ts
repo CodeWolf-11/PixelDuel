@@ -10,6 +10,5 @@ const router = Router();
 router.use('/auth', AuthRouter);
 router.use('/', VerifyRouter);
 router.use('/user', UserRouter);
-router.use("/", PasswordRouter);
 
 export default router;

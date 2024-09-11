@@ -1,6 +1,6 @@
 "use server"
 
-import { CHECK_CREDENTIALS_URL, REGISTER_URL } from "@/lib/apiEndpoints"
+import { CHECK_CREDENTIALS_URL, FORGET_PASSWORD_URL, REGISTER_URL } from "@/lib/apiEndpoints"
 import axios, { AxiosError } from "axios"
 
 export const registerActions = async (prevState: any, formdata: FormData) => {
@@ -81,6 +81,17 @@ export const loginActions = async (prevState: any, formdata: FormData) => {
 export const forgetPassordAction = async (prevState: any, formdata: FormData) => {
     try {
 
+
+        const { data } = await axios.post(FORGET_PASSWORD_URL, {
+            email: formdata.get("email") as string
+        });
+
+        return {
+            status: 200,
+            message: data?.message ?? "check you email",
+            errors: {}
+        }
+
     } catch (error) {
 
         if (error instanceof AxiosError) {
@@ -90,7 +101,6 @@ export const forgetPassordAction = async (prevState: any, formdata: FormData) =>
                     status: 422,
                     message: error.response?.data?.message,
                     errors: error.response?.data?.errors,
-                    data: {}
                 }
             }
 
@@ -100,7 +110,6 @@ export const forgetPassordAction = async (prevState: any, formdata: FormData) =>
             status: 500,
             message: "Something went wrong",
             errors: {},
-            data: {}
         }
     }
 }

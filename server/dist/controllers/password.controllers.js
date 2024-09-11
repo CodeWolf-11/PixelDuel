@@ -16,7 +16,9 @@ export const forgetPasswordController = async (req, res) => {
         });
         if (!user || user === null) {
             return res.status(422).json({
-                message: "no user found with this email"
+                errors: {
+                    email: "no user found with this email"
+                }
             });
         }
         //generate a token

@@ -21,7 +21,9 @@ export const forgetPasswordController = async (req: Request, res: Response) => {
 
         if (!user || user === null) {
             return res.status(422).json({
-                message: "no user found with this email"
+                errors: {
+                    email: "no user found with this email"
+                }
             });
         }
 
