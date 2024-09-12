@@ -102,7 +102,9 @@ export const resetPasswordController = async (req, res) => {
                 email: payload.email
             },
             data: {
-                password: payload.password
+                password: payload.password,
+                password_reset_token: null,
+                token_send_at: null,
             }
         });
         return res.status(200).json({

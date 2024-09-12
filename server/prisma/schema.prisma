@@ -23,4 +23,16 @@ model User {
   email_verified_at    DateTime?
   email_verify_token   String?
   created_at           DateTime  @default(now())
+  Duel                 Duel[]
+}
+
+model Duel {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  image       String
+  userId      Int
+  created_at  DateTime @default(now())
+  expire_at   DateTime
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

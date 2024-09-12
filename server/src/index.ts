@@ -6,7 +6,6 @@ import ejs from "ejs";
 import router from "./routes/index.js";
 //Queue
 import "./jobs/index.js";
-import { emailQueue, emailQueueName } from "./jobs/EmailJob.js";
 import { appLimiter } from "./config/rateLimit.js";
 
 
@@ -32,11 +31,11 @@ app.get("/", async (req: Request, res: Response) => {
 
     const html = await ejs.renderFile(__dirname + `/views/emails/welcome.ejs`, { name: "Nishant Rai" });
 
-    await emailQueue.add(emailQueueName, {
-        to: "yohalej367@obisims.com",
-        subject: "Testing...",
-        body: html
-    })
+    // await emailQueue.add(emailQueueName, {
+    //     to: "yohalej367@obisims.com",
+    //     subject: "Testing...",
+    //     body: html
+    // })
 
     return res.json({
         "message": "email successfull"
