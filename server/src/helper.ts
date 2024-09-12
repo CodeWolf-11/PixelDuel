@@ -4,8 +4,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 import moment from "moment";
 import { mimes } from "./config/filesMIME.js";
-import { UploadedFile } from "express-fileupload";
-import { v4 as uuid4 } from "uuid";
 
 export const formatError = (issues: ZodError) => {
 
@@ -46,6 +44,12 @@ export const imageValidator = (size: number, mime: string): string | null => {
 
 export const bytesToMB = (size: number): number => {
     return (size) / (1024 * 1024);
+}
+
+export const getPublicID = (url: string): string => {
+    const size = url.split("/").length;
+    const publicId = url.split("/")[size - 1].split(".")[0];
+    return publicId;
 }
 
 // export const uploadFile = async (image: UploadedFile) => {
