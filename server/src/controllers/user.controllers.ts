@@ -35,6 +35,10 @@ export const deleteUserController = async (req: Request, res: Response) => {
             }
         });
 
+        return res.status(200).json({
+            "message": "User account deleted"
+        })
+
     } catch (error) {
         return res.status(500).json({
             "message": "Something went wrong"

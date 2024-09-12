@@ -155,6 +155,7 @@ export const updateDuelController = async (req: Request, res: Response) => {
             }
             //if file is passed then removethePrevious file from cloudinary
             const publicId = getPublicID(duel.image);
+
             await destroyQueue.add(destroyQueueName, {
                 publicId: publicId
             });
@@ -163,7 +164,7 @@ export const updateDuelController = async (req: Request, res: Response) => {
 
             await uploadQueue.add(uploadQueueName, {
                 duelId: duel?.id,
-                loacalFilePath: req.file.path
+                localFilePath: req.file.path
             });
 
         }
