@@ -21,7 +21,7 @@ const Dashboard: React.FC = async () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4 gap-6  mx-auto">
                 {
-                    duels.length > 0 && duels.map((duel, index) => <Duel key={duel.id} duel={duel} />)
+                    duels.length > 0 && duels.map((duel, index) => <Duel token={session.user?.token as string} key={duel.id} duel={duel} />)
                 }
             </div>
 

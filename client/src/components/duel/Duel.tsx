@@ -9,12 +9,14 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import { Button } from "../ui/button";
+import DuelMenu from "./DuelMenu";
 
-const Duel: React.FC<{ duel: duelResponseType }> = ({ duel }) => {
+const Duel: React.FC<{ duel: duelResponseType, token: string }> = ({ duel, token }) => {
     return <>
         <Card>
-            <CardHeader>
-                <CardTitle>{duel.title}</CardTitle>
+            <CardHeader className="flex justify-between flex-row">
+                <CardTitle className="font-bold">{duel.title}</CardTitle>
+                <DuelMenu token={token} duel={duel} />
             </CardHeader>
             <CardContent>
                 {

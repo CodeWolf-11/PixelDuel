@@ -47,7 +47,7 @@ const ResetPasswordForm: React.FC = () => {
         <div className="mt-4">
             <Label htmlFor="confirm_password">Confirm Password</Label>
             <Input id="confirm_password" type="password" name="confirm_password" placeholder="Enter your password" />
-            <span className='text-red-500'>{state?.errors?.password}</span>
+            <span className='text-red-500'>{state?.errors?.confirm_password}</span>
         </div>
 
         <div className="mt-4 block ">
