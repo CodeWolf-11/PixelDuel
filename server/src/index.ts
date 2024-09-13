@@ -7,7 +7,7 @@ import router from "./routes/index.js";
 //Queue
 import "./jobs/index.js";
 import { appLimiter } from "./config/rateLimit.js";
-
+import cors from "cors";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url)); //this will give the path of the current directory
 
@@ -16,6 +16,7 @@ const app: Application = express();
 const PORT = process.env.PORT || 8000;
 
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(appLimiter);

@@ -103,6 +103,16 @@ export const loginController = async (req: Request, res: Response) => {
             });
         }
 
+        //check if the email is verified
+
+        if (!user.email_verified_at) {
+            return res.status(422).json({
+                errors: {
+                    email: "Email was not verified"
+                }
+            });
+        }
+
         //check for password
 
         const isPasswordSame = await bcrypt.compare(payload.password, user.password);
@@ -174,6 +184,15 @@ export const CheckCredentials = async (req: Request, res: Response) => {
             return res.status(422).json({
                 errors: {
                     email: "No User found with this email"
+                }
+            });
+        }
+
+        //check for email is verified
+        if (!user.email_verified_at) {
+            return res.status(422).json({
+                errors: {
+                    email: "Email was not verified"
                 }
             });
         }
