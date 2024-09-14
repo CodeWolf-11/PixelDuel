@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -20,7 +20,10 @@ const DuelMenu: React.FC<{ duel: duelResponseType, token: string }> = ({ duel, t
 
     return <>
 
-        <EditDuel duel={duel} open={open} setOpen={setOpen} token={token} />
+        <Suspense fallback={"Loading..."}>
+            <EditDuel duel={duel} open={open} setOpen={setOpen} token={token} />
+        </Suspense>
+
 
         <DropdownMenu>
             <DropdownMenuTrigger>

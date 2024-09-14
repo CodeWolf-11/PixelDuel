@@ -12,6 +12,7 @@ import { Button } from "../ui/button";
 import DuelMenu from "./DuelMenu";
 
 const Duel: React.FC<{ duel: duelResponseType, token: string }> = ({ duel, token }) => {
+
     return <>
         <Card>
             <CardHeader className="flex justify-between flex-row">
@@ -20,7 +21,7 @@ const Duel: React.FC<{ duel: duelResponseType, token: string }> = ({ duel, token
             </CardHeader>
             <CardContent>
                 {
-                    duel.image && <Image src={duel.image} alt="" width={500} height={500} className="rounded-lg w-full h-[220px] object-contain" priority />
+                    duel.image && <Image src={duel.image} alt="" width={500} height={500} className="rounded-lg w-full h-[220px] object-contain" />
                 }
                 <CardDescription>{duel.description}</CardDescription>
                 <p>

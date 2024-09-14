@@ -18,6 +18,7 @@ import { DUEL_URL } from "@/lib/apiEndpoints";
 import axios, { AxiosError } from "axios";
 import { CustomUser } from "@/app/api/auth/[...nextauth]/options";
 import { toast } from "sonner";
+import { revalidateCash } from "@/actions/cash.actions";
 
 
 
@@ -58,6 +59,7 @@ const AddDuel: React.FC<{ user: CustomUser }> = ({ user }) => {
             setOpen(false);
 
             if (data?.message) {
+                revalidateCash("dashboard");
                 setDuelData({});
                 setDate(undefined);
                 setImage(undefined);

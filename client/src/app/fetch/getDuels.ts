@@ -1,5 +1,6 @@
 import { DUEL_URL } from "@/lib/apiEndpoints"
 
+
 export const getDuels = async (token: string) => {
     const res = await fetch(DUEL_URL, {
         headers: {
@@ -7,7 +8,7 @@ export const getDuels = async (token: string) => {
         },
 
         next: {
-            revalidate: 0,
+            revalidate: 60 * 60,
             tags: ["dashboard"]
         }
     });

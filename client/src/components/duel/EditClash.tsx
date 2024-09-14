@@ -17,6 +17,7 @@ import SubmitBtn from "../common/SubmitBtn";
 import { DUEL_URL } from "@/lib/apiEndpoints";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
+import { revalidateCash } from "@/actions/cash.actions";
 
 
 
@@ -51,17 +52,19 @@ const EditDuel: React.FC<{ token: string, duel: duelResponseType, open: boolean,
                 formData.append("image", image);
             }
 
-            const { data } = await axios.post(DUEL_URL, formData, {
+            const { data } = await axios.put(DUEL_URL + `/${duel.id}`, formData, {
                 headers: {
                     Authorization: token
                 }
             });
 
-            setOpen(false);
 
             if (data?.message) {
-                setDuelData({});
-                setDate(undefined);
+                revalidateCash("dashboard");
+                setDuelData({
+                    title: duel.title
+                });
+                setDate(new Date(duel.expire_at));
                 setImage(undefined);
                 setError({});
                 toast.success("Duel added successfully !");

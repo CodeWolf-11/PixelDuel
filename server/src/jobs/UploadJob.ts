@@ -1,7 +1,9 @@
 import { Job, Queue, Worker } from "bullmq";
 import { defaultQueueOptions, redisConnection } from "../config/queue.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import axios, { AxiosResponse } from "axios";
 import prisma from "../config/db.js";
+import { resolveContent } from "nodemailer/lib/shared/index.js";
 
 
 interface uploadJobDataType {
@@ -25,15 +27,22 @@ export const uploadWorker = new Worker(uploadQueueName, async (job: Job) => {
 
     //update the db
 
-    await prisma.duel.update({
-        where: {
-            id: uploadData.duelId
-        },
-        data: {
-            image: response?.secure_url
-        }
-    });
+    // await prisma.duel.update({
+    //     where: {
+    //         id: uploadData.duelId
+    //     },
+    //     data: {
+    //         image: response?.secure_url
+    //     }
+    // });
+
+    return response;
 
 }, {
     connection: redisConnection
+});
+
+uploadWorker.on("completed", async (job: Job, returnValue: any) => {
+
+    const response = await axios.get(`${process.env.CLIENT_APP_URL}/api/revalidate`);
 });
