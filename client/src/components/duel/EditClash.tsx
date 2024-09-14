@@ -6,9 +6,7 @@ import {
     DialogContent,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-import { Button } from "../ui/button";
+} from "@/components/ui/dialog";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea"
@@ -61,13 +59,17 @@ const EditDuel: React.FC<{ token: string, duel: duelResponseType, open: boolean,
 
             if (data?.message) {
                 revalidateCash("dashboard");
+                setTimeout(() => {
+                    revalidateCash("dashboard");
+                }, 5000);
                 setDuelData({
-                    title: duel.title
+                    title: duel.title,
+                    description: duel.description
                 });
                 setDate(new Date(duel.expire_at));
                 setImage(undefined);
                 setError({});
-                toast.success("Duel added successfully !");
+                toast.success("Duel Updated successfully !");
                 setOpen(false);
             }
 

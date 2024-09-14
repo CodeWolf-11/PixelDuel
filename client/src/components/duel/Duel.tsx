@@ -31,7 +31,7 @@ const Duel: React.FC<{ duel: duelResponseType, token: string }> = ({ duel, token
                 </p>
             </CardContent>
             <CardFooter>
-                <Button>Link</Button>
+                <Button>Items</Button>
             </CardFooter>
         </Card>
 

@@ -82,6 +82,9 @@ export const getAllDuelController = async (req: Request, res: Response) => {
         const duels = await prisma.duel.findMany({
             where: {
                 userId: req.user?.id as number
+            },
+            orderBy: {
+                id: "desc"
             }
         });
 

@@ -56,10 +56,14 @@ const AddDuel: React.FC<{ user: CustomUser }> = ({ user }) => {
                 }
             });
 
-            setOpen(false);
 
             if (data?.message) {
+                //not a good practise
                 revalidateCash("dashboard");
+                setTimeout(() => {
+                    revalidateCash("dashboard");
+                }, 5000);
+
                 setDuelData({});
                 setDate(undefined);
                 setImage(undefined);
