@@ -10,6 +10,7 @@ import {
 import Image from "next/image";
 import { Button } from "../ui/button";
 import DuelMenu from "./DuelMenu";
+import Link from "next/link";
 
 const Duel: React.FC<{ duel: duelResponseType, token: string }> = ({ duel, token }) => {
 
@@ -31,7 +32,9 @@ const Duel: React.FC<{ duel: duelResponseType, token: string }> = ({ duel, token
                 </p>
             </CardContent>
             <CardFooter>
-                <Button>Items</Button>
+                <Link href={`/duel/items/${duel.id}`}>
+                    <Button>Items</Button>
+                </Link>
             </CardFooter>
         </Card>
 

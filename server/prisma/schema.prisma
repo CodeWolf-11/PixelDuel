@@ -27,12 +27,31 @@ model User {
 }
 
 model Duel {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String
-  image       String
-  userId      Int
-  created_at  DateTime @default(now())
-  expire_at   DateTime
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           Int           @id @default(autoincrement())
+  title        String
+  description  String
+  image        String
+  userId       Int
+  created_at   DateTime      @default(now())
+  expire_at    DateTime
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  DuelItem     DuelItem[]
+  ClashComment DuelComment[]
+}
+
+model DuelItem {
+  id         Int      @id @default(autoincrement())
+  duelId     Int
+  duel       Duel     @relation(fields: [duelId], references: [id], onDelete: Cascade)
+  image      String
+  count      Int      @default(0)
+  created_at DateTime @default(now())
+}
+
+model DuelComment {
+  id         Int      @id @default(autoincrement())
+  duel       Duel     @relation(fields: [duelId], references: [id], onDelete: Cascade)
+  duelId     Int
+  comment    String
+  created_at DateTime @default(now())
 }

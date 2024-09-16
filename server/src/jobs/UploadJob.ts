@@ -3,6 +3,7 @@ import { defaultQueueOptions, redisConnection } from "../config/queue.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import axios from "axios";
 import prisma from "../config/db.js";
+import fs from "fs";
 
 
 interface uploadJobDataType {
@@ -35,13 +36,9 @@ export const uploadWorker = new Worker(uploadQueueName, async (job: Job) => {
         }
     });
 
-    return response;
+
+    fs.unlinkSync(uploadData.localFilePath);
 
 }, {
     connection: redisConnection
-});
-
-uploadWorker.on("completed", async (job: Job, returnValue: any) => {
-
-    const response = await axios.get(`${process.env.CLIENT_APP_URL}/api/revalidate`);
 });

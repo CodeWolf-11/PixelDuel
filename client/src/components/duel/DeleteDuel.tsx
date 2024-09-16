@@ -28,6 +28,7 @@ const DeleteDuel: React.FC<{ open: boolean, setOpen: Dispatch<SetStateAction<boo
             });
 
             revalidateCash("dashboard");
+            toast.success("Duel deleted successfully!");
         } catch (error) {
             toast.error("Something went wrong");
         }
