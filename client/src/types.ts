@@ -21,3 +21,8 @@ type duelResponseType = {
     created_at: string,
     expire_at: string,
 }
+
+type duelItemFormType = {
+    image: File | null
+}
+
