@@ -5,6 +5,9 @@ import React from "react";
 import { Button } from "../ui/button";
 import { useState, useRef } from "react";
 import Image from "next/image";
+import axios from "axios";
+import { DUEL_ITEMS_URL } from "@/lib/apiEndpoints";
+import { toast } from "sonner";
 
 
 
@@ -19,6 +22,7 @@ const AddDuelItems: React.FC<{ token: string, duelId: number }> = ({ token, duel
 
     const imageRef1 = useRef<HTMLInputElement | null>(null);
     const imageRef2 = useRef<HTMLInputElement | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
 
@@ -39,6 +43,42 @@ const AddDuelItems: React.FC<{ token: string, duelId: number }> = ({ token, duel
 
     }
 
+    const handleSubmit = async () => {
+        try {
+
+            const formData = new FormData();
+            formData.append("id", duelId.toString());
+
+            items.map((item) => {
+                if (item.image) {
+                    formData.append(`images[]`, item.image);
+                }
+            });
+
+
+            if (formData.get("images[]")) {
+                setLoading(true);
+                const { data } = await axios.post(DUEL_ITEMS_URL, formData, {
+                    headers: {
+                        Authorization: token
+                    }
+                });
+
+                if (data?.message) {
+                    toast.success(data?.message);
+                    setLoading(false);
+
+                }
+            }
+
+
+        } catch (error) {
+
+            //pending
+
+        }
+    }
+
     return <>
         <div className="mt-10">
             <div className="flex flex-wrap lg:flex-nowrap justify-between items-center">
@@ -51,7 +91,7 @@ const AddDuelItems: React.FC<{ token: string, duelId: number }> = ({ token, duel
 
                     <div className="w-full flex justify-center items-center rounded-md border-4 border-dashed p-2 h-[300px] cursor-pointer" onClick={() => imageRef1?.current?.click()}>
                         {
-                            urls[0] === "" ? (
+                            urls?.[0] === "" ? (
 
                                 <h1 className="flex gap-2 items-center justify-between">
                                     <Upload />
@@ -60,7 +100,7 @@ const AddDuelItems: React.FC<{ token: string, duelId: number }> = ({ token, duel
 
 
                             ) : (
-                                <Image src={urls[0]} height={300} width={300} alt="image" className="w-full h-full object-contain" />
+                                <Image src={urls?.[0]} height={300} width={300} alt="image" className="w-full h-full object-contain" />
                             )
                         }
                     </div>
@@ -79,7 +119,7 @@ const AddDuelItems: React.FC<{ token: string, duelId: number }> = ({ token, duel
                     }} />
                     <div className="w-full flex justify-center items-center rounded-md border-4 border-dashed p-2 h-[300px] cursor-pointer" onClick={() => imageRef2?.current?.click()}>
                         {
-                            urls[1] === "" ? (
+                            urls?.[1] === "" ? (
 
                                 <h1 className="flex gap-2 items-center justify-between">
                                     <Upload />
@@ -88,7 +128,7 @@ const AddDuelItems: React.FC<{ token: string, duelId: number }> = ({ token, duel
 
 
                             ) : (
-                                <Image src={urls[1]} height={300} width={300} alt="image" className="w-full h-full object-contain" />
+                                <Image src={urls?.[1]} height={300} width={300} alt="image" className="w-full h-full object-contain" />
                             )
                         }
 

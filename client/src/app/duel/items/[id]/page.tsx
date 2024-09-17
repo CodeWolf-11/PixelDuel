@@ -12,17 +12,17 @@ const duelItems: React.FC<{ params: { id: string } }> = async ({ params }) => {
     const session: CustomSession | null = await getServerSession(authOptions);
 
     return (
-        <>
-            <div className="container px-2">
-                <Navbar />
-                <div className="mt-4">
-                    <h1 className="text-2xl lg:text-4xl font-extrabold">{`${duel?.title}`}</h1>
-                    <p className="text-lg">{`${duel?.description}`}</p>
-                </div>
 
-                <AddDuelItems token={session?.user?.token as string} duelId={Number(params.id)} />
+        <div className="mx-auto container px-2">
+            <Navbar />
+            <div className="mt-4">
+                <h1 className="text-2xl lg:text-4xl font-extrabold">{`${duel?.title}`}</h1>
+                <p className="text-lg">{`${duel?.description}`}</p>
             </div>
-        </>
+
+            <AddDuelItems token={session?.user?.token as string} duelId={Number(params.id)} />
+        </div>
+
     )
 }
 
