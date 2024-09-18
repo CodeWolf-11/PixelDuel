@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "User" ALTER COLUMN "email_verified_at" DROP NOT NULL,
-ALTER COLUMN "created_at" SET DEFAULT CURRENT_TIMESTAMP;

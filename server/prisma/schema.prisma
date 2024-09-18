@@ -27,16 +27,16 @@ model User {
 }
 
 model Duel {
-  id           Int           @id @default(autoincrement())
-  title        String
-  description  String
-  image        String
-  userId       Int
-  created_at   DateTime      @default(now())
-  expire_at    DateTime
-  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  DuelItem     DuelItem[]
-  ClashComment DuelComment[]
+  id          Int           @id @default(autoincrement())
+  title       String
+  description String
+  image       String
+  userId      Int
+  created_at  DateTime      @default(now())
+  expire_at   DateTime
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  DuelItem    DuelItem[]
+  DuelComment DuelComment[]
 }
 
 model DuelItem {

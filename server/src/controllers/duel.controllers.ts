@@ -108,6 +108,26 @@ export const getUniqueController = async (req: Request, res: Response) => {
         const duel = await prisma.duel.findUnique({
             where: {
                 id: Number(id),
+            },
+            include: {
+                DuelItem: {
+                    select: {
+                        image: true,
+                        id: true,
+                        count: true,
+                    }
+                },
+
+                DuelComment: {
+                    select: {
+                        comment: true,
+                        id: true,
+                        created_at: true,
+                    },
+                    orderBy: {
+                        id: "desc"
+                    }
+                }
             }
         });
 
