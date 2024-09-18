@@ -71,7 +71,7 @@ const AddDuelItems: React.FC<{ token: string, duelId: number }> = ({ token, duel
 
                     setTimeout(() => {
                         router.push("/dashboard");
-                    }, 1000);
+                    }, 1500);
 
                     setLoading(false);
 
