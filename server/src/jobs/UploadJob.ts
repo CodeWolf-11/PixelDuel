@@ -50,8 +50,6 @@ export const uploadWorker = new Worker(uploadQueueName, async (job: Job) => {
         });
     }
 
-
-
     fs.unlinkSync(uploadData.localFilePath);
 
 }, {
