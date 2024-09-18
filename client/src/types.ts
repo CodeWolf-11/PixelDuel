@@ -20,9 +20,22 @@ type duelResponseType = {
     image: string,
     created_at: string,
     expire_at: string,
+    DuelItem: Array<DuelItem>,
+    DuelComment: Array<DuelComment>
 }
 
 type duelItemFormType = {
     image: File | null
 }
 
+type DuelItem = {
+    id: number,
+    count: number,
+    image: string,
+}
+
+type DuelComment = {
+    id: number,
+    comment: string,
+    created_at: string
+}

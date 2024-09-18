@@ -5,12 +5,12 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { EllipsisVertical } from "lucide-react";
 import dynamic from "next/dynamic";
+import { Env } from "@/lib/env";
+import { toast } from "sonner";
 
 const EditDuel = dynamic(() => import("./EditClash"));
 const DeleteDuel = dynamic(() => import("./DeleteDuel"));
@@ -19,6 +19,11 @@ const DuelMenu: React.FC<{ duel: duelResponseType, token: string }> = ({ duel, t
 
     const [open, setOpen] = useState<boolean>(false);
     const [deleteOpen, setDeleteOpen] = useState<boolean>(false);
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(`${Env.APP_URL}/duel/${duel.id}`);
+        toast.success("Link copied !");
+    }
 
     return <>
 
@@ -34,7 +39,7 @@ const DuelMenu: React.FC<{ duel: duelResponseType, token: string }> = ({ duel, t
             </DropdownMenuTrigger>
             <DropdownMenuContent>
                 <DropdownMenuItem onClick={() => setOpen(true)}>Edit</DropdownMenuItem>
-                <DropdownMenuItem>Copy Link</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleCopy}>Copy Link</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setDeleteOpen(true)}>Delete</DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

@@ -5,9 +5,10 @@ import React from "react";
 import { Button } from "../ui/button";
 import { useState, useRef } from "react";
 import Image from "next/image";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { DUEL_ITEMS_URL } from "@/lib/apiEndpoints";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 
 
@@ -23,6 +24,7 @@ const AddDuelItems: React.FC<{ token: string, duelId: number }> = ({ token, duel
     const imageRef1 = useRef<HTMLInputElement | null>(null);
     const imageRef2 = useRef<HTMLInputElement | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
+    const router = useRouter();
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
 
@@ -66,15 +68,38 @@ const AddDuelItems: React.FC<{ token: string, duelId: number }> = ({ token, duel
 
                 if (data?.message) {
                     toast.success(data?.message);
+
+                    setTimeout(() => {
+                        router.push("/dashboard");
+                    }, 1000);
+
                     setLoading(false);
 
                 }
+            } else {
+                toast.warning("Please upload both images");
             }
 
 
         } catch (error) {
 
-            //pending
+            setLoading(false);
+
+            if (error instanceof AxiosError) {
+                if (error.response?.status == 422) {
+
+                    if (error.response.data?.errors) {
+                        error.response.data?.errors?.map((err: string) => {
+                            toast.error(err);
+                        })
+                    }
+                }
+            } else {
+                toast.error('Something went wrong please try again');
+            }
+
+
+
 
         }
     }
@@ -137,7 +162,11 @@ const AddDuelItems: React.FC<{ token: string, duelId: number }> = ({ token, duel
             </div>
 
             <div className="text-center">
-                <Button className="w-50 mt-3">Submit</Button>
+                <Button className="w-50 mt-3" onClick={handleSubmit} disabled={loading}>
+                    {
+                        loading ? "Processing..." : "Submit"
+                    }
+                </Button>
             </div>
         </div>
     </>
