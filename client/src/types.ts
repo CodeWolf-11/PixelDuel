@@ -35,7 +35,8 @@ type DuelItem = {
 }
 
 type DuelComment = {
-    id: number,
+    duelId: number,
+    id?: number,
     comment: string,
     created_at: string
 }

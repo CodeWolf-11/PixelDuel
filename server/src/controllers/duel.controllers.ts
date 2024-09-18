@@ -122,6 +122,7 @@ export const getUniqueController = async (req: Request, res: Response) => {
                     select: {
                         comment: true,
                         id: true,
+                        duelId: true,
                         created_at: true,
                     },
                     orderBy: {

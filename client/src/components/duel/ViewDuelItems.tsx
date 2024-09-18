@@ -1,13 +1,44 @@
 "use client"
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import CountUp from "react-countup";
+import socket from "@/lib/socket";
 
 const ViewDuelItem: React.FC<{ duel: duelResponseType }> = ({ duel }) => {
 
     const [duelComments, setDuelComments] = useState<DuelComment[]>(duel.DuelComment);
     const [duelItems, setDuelItems] = useState<DuelItem[]>(duel.DuelItem);
+
+    useEffect(() => {
+        socket.on(`duel-${duel.id}`, (data) => {
+            updateCounter(data?.duelItemId);
+        });
+
+        socket.on(`duel_comment-${duel.id}`, (data) => {
+            updateComment(data);
+        });
+    }, []);
+
+    const updateComment = (payload: any) => {
+        if (duelComments && duelComments.length > 0) {
+            setDuelComments([payload, ...duelComments]);
+        } else {
+            setDuelComments([payload]);
+        }
+    }
+
+    const updateCounter = (id: number) => {
+        const items = [...duelItems];
+        const findIndex = duelItems.findIndex((item) => item.id === id);
+
+        if (findIndex !== -1) {
+            items[findIndex].count += 1;
+        }
+
+        setDuelItems(items);
+    }
+
     return <>
         <div className="mt-10">
             <div className="flex flex-wrap lg:flex-nowrap justify-between items-center">

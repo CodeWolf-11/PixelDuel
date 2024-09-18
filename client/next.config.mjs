@@ -8,7 +8,8 @@ const nextConfig = {
                 pathname: "/dmqwx60mi/image/upload/**"
             }
         ]
-    }
+    },
+    reactStrictMode: false
 };
 
 export default nextConfig;
