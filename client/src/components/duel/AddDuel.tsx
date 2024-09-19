@@ -49,7 +49,7 @@ const AddDuel: React.FC<{ user: CustomUser }> = ({ user }) => {
             if (image) {
                 formData.append("image", image);
             }
-
+            console.log(process.env.NEXT_PUBLIC_BACKEND_APP_URL);
             const { data } = await axios.post(DUEL_URL, formData, {
                 headers: {
                     Authorization: user.token

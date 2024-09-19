@@ -7,7 +7,9 @@
     "start": "node ./dist/index.js",
     "server": "nodemon ./dist/index.js",
     "watch": "tsc -w",
-    "build": "concurrently \"tsc -b \" \" npm run copy-file\" \"npx prisma migrate deploy\" \"npx prisma generate\"",
+    "prisma:dev": "prisma migrate dev",
+    "prisma:dep": "prisma migradte deploy",
+    "build": "concurrently \"tsc -b \" \" npm run copy-file\"",
     "dev": "concurrently \"npm run watch \" \"npm run server\" \"npm run watch-views\"",
     "copy-file": "copyfiles -u 1 \"src/views/**/*\"  dist/",
     "watch-views": "nodemon --watch src/views -e ejs -x \"npm run copy-file\""
