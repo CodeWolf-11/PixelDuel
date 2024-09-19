@@ -2,8 +2,12 @@ import { ConnectionOptions, DefaultJobOptions } from "bullmq";
 
 export const redisConnection: ConnectionOptions = {
     host: process.env.REDIS_HOST,
-    port: 6379,
-    // password: 
+    port: Number(process.env.REDIS_PORT) ?? 6379,
+    password: process.env.REDIS_PASSWORD as string,
+    username: process.env.USERNAME as string,
+    tls: {
+        rejectUnauthorized: false
+    }
 }
 
 export const defaultQueueOptions: DefaultJobOptions = {
