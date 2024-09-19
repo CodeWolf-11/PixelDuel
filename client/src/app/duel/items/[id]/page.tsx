@@ -13,6 +13,7 @@ const duelItems: React.FC<{ params: { id: string } }> = async ({ params }) => {
 
     const session: CustomSession | null = await getServerSession(authOptions);
 
+
     if (session) {
         return (
 
