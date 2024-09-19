@@ -9,8 +9,8 @@
       "es2020"
     ],
     "target": "es2020",
-    "module": "Node16",
-    "moduleResolution": "Node16",
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "esModuleInterop": true,
     "types": [
       "node"
